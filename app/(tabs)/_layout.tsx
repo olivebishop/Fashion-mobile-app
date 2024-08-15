@@ -13,7 +13,7 @@ export default function _layout() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: "home" | "home-outline" | "search" | "search-outline" | "add-circle" | "add-circle-outline" | "person" | "person-outline" = 'home-outline';
 
-          if (route.name === 'index') {
+          if (route.name === 'home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'explore') {
             iconName = focused ? 'search' : 'search-outline';
