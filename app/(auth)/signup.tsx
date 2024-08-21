@@ -8,7 +8,7 @@ const CreateAccount = () => {
   const handleSignUp = () => {
     // Perform sign up logic here
     // Once sign up is successful, redirect to the 'explore' tab
-    router.push('/(tabs)/explore');
+    router.push('/(setup)/profile-setup');
   };
 
   return (

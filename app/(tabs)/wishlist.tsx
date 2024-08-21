@@ -60,6 +60,7 @@ const  Wishlist: React.FC = () => {
 
   return (
     <View style={styles.container}>
+         <Text className='font-bold text-lg mt-16 ml-4'>Wishlists</Text>
       <View style={styles.searchContainer}>
         <View style={styles.searchBox}>
           <TextInput
@@ -73,7 +74,7 @@ const  Wishlist: React.FC = () => {
           </TouchableOpacity>
         </View>
      <View>
-      <Text className='font-semibold text-2xl'>Wishlist</Text>
+    
      </View>
       </View>
       <FlatList

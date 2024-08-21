@@ -60,6 +60,7 @@ const Orders: React.FC = () => {
 
   return (
     <View style={styles.container}>
+    <Text className='font-bold text-lg mt-16 ml-4'>Orders</Text>
       <View style={styles.searchContainer}>
         <View style={styles.searchBox}>
           <TextInput
@@ -73,8 +74,14 @@ const Orders: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View>
-      <Text className='font-semibold text-2xl'>Orders</Text>
      </View>
+     <View className='flex-row gap-4 itemes-center'>
+       <Text className="rounded-full  px-4 py-2 bg-amber-950 text-white">Pants</Text>
+        <Text className='rounded-full  px-4 py-2 bg-amber-950 text-white'>Dress</Text>
+        <Text className='rounded-full  px-4 py-2 bg-amber-950 text-white'>Shorts</Text>
+        <Text className='rounded-full  px-4 py-2 bg-amber-950 text-white'>Boots</Text>
+        <Text className='rounded-full  px-6 py-2 bg-amber-950 text-white'>Tshirts</Text>
+       </View>
       </View>
       <FlatList
         data={exploreData}

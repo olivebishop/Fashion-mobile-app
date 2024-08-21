@@ -1,95 +1,121 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet, Dimensions } from 'react-native';
 
-type CardContent = {
-  title: string;
-  description: string;
-  image: any;
-};
+const Explore = () => {
+  const [searchText, setSearchText] = useState('');
 
-const cardData: CardContent[] = [
-  {
-    title: "Fresh Arrivals",
-    description: 'Discount 50% for the first transactions',
-    image: require('../assets/images/one.jpg'),
-  },
-  {
-    title: "Buy One offer",
-    description: "Amazing deals on our latest collection",
-    image: require('../assets/images/one.jpg'),
-  },
-  {
-    title:"Summer Spectacular",
-    description:  "Heat up your style with our Summer Sale!",
-    image: require('../assets/images/one.jpg'),
-  },
-  {
-    title: "Limited Edition ",
-    description: "Exclusive pieces just for you",
-    image: require('../assets/images/one.jpg'),
-  },
-  {
-    title: "Exclusive Offers",
-    description: "Unbeatable deals for a limited time",
-    image: require('../assets/images/one.jpg'),
-  },
-];
+  const renderProduct = ({ item }) => (
+    <TouchableOpacity style={styles.productContainer}>
+      <Image source={item.image} style={styles.productImage} />
+      <View style={styles.productDetails}>
+        <Text style={styles.productTitle}>{item.title}</Text>
+        <Text style={styles.productPrice}>{item.price}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
-const CardCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const windowWidth = Dimensions.get('window').width;
+  const exploreData = [
+    {
+      id: '1',
+      title: 'Hooded Jacket',
+      price: '$99.99',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '2',
+      title: 'Casual Shirt',
+      price: '$49.99',
+      image: require('../../assets/images/two.jpg'),
+    },
+    {
+      id: '3',
+      title: 'Skinny Jeans',
+      price: '$79.99',
+      image: require('../../assets/images/three.jpg'),
+    },
+    {
+      id: '4',
+      title: 'Ragged Jeans',
+      price: '$20.78',
+      image: require('../../assets/images/one.jpg'),
+    },
+    // Add more product data as needed
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === cardData.length - 1 ? 0 : prevIndex + 1));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleScroll = (event: any) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffsetX / windowWidth);
-    setCurrentIndex(index);
-  };
+  const categoryData = [
+    {
+      id: '1',
+      title: 'T-Shirt',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '2',
+      title: 'Pant',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '3',
+      title: 'Dress',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '4',
+      title: 'Jacket',
+      
+    },
+  ];
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        pagingEnabled
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        style={{ width: windowWidth }}
-        contentOffset={{ x: currentIndex * windowWidth, y: 0 }}
-      >
-        {cardData.map((card, index) => (
-          <View key={index} style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Image source={card.image} style={styles.image} />
-              <View style={styles.content}>
-                <Text style={styles.title}>{card.title}</Text>
-                <Text style={styles.description}>{card.description}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => alert('Button Pressed!')}>
-                  <Text style={styles.buttonText}>Shop Now</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+      <View style={styles.searchContainer}>
+        <View style={styles.headerContainer}>
+          <View style={styles.locationContainer}>
+            <Text style={styles.locationText}>New York, USA</Text>
           </View>
-        ))}
-      </ScrollView>
-      <View style={styles.paginationContainer}>
-        {cardData.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              index === currentIndex ? styles.activePaginationDot : null,
-            ]}
+          <TouchableOpacity style={styles.notificationContainer}>
+            <Image source={require('../../assets/images/notification.png')} style={styles.notificationIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.searchBox}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search products..."
+            value={searchText}
+            onChangeText={setSearchText}
           />
-        ))}
+          <TouchableOpacity style={styles.searchButton}>
+            <Image source={require('../../assets/images/search.png')} style={styles.searchIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardContainer}>
+          <Image source={require('../../assets/images/new-collection.jpg')} style={styles.cardImage} />
+          <View style={styles.cardContent}>
+            <Text style={styles.cardTitle}>New Collection</Text>
+            <Text style={styles.cardDescription}>Discount 50% for the first transaction</Text>
+            <TouchableOpacity style={styles.cardButton}>
+              <Text style={styles.cardButtonText}>Shop Now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.categoryContainer}>
+          <Text style={styles.categoryTitle}>Category</Text>
+          <View style={styles.categoryList}>
+            {categoryData.map((category) => (
+              <TouchableOpacity style={styles.categoryItem} key={category.id}>
+                <Image source={category.image} style={styles.categoryImage} />
+                <Text style={styles.categoryItemText}>{category.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
       </View>
+      <FlatList
+        data={exploreData}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={styles.flatListContent}
+        renderItem={renderProduct}
+      />
     </View>
   );
 };
@@ -97,70 +123,148 @@ const CardCarousel = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+  },
+  searchContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 32,
+    marginBottom: 16,
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  locationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#b5651d',
+  },
+  notificationContainer: {
+    padding: 8,
+  },
+  notificationIcon: {
+    width: 24,
+    height: 24,
+  },
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 9999,
+    paddingHorizontal: 16,
+  },
+  searchButton: {
+    padding: 8,
+    marginLeft: 8,
+  },
+  searchIcon: {
+    width: 24,
+    height: 24,
   },
   cardContainer: {
-    width: Dimensions.get('window').width - 32,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-  },
-  card: {
+    marginTop: 16,
+    flexDirection: 'row',
     backgroundColor: '#FFECB3',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
     borderRadius: 8,
     overflow: 'hidden',
-    flexDirection: 'row-reverse',
   },
-  image: {
+  cardImage: {
     width: '50%',
-    height: 250,
+    height: 200,
     resizeMode: 'cover',
   },
-  content: {
-    padding: 24,
+  cardContent: {
     flex: 1,
+    padding: 16,
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 24,
+  cardTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#424242',
   },
-  description: {
+  cardDescription: {
     marginTop: 8,
     color: '#757575',
   },
-  button: {
+  cardButton: {
     backgroundColor: '#4E342E',
     borderRadius: 4,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginTop: 20,
+    marginTop: 16,
   },
-  buttonText: {
+  cardButtonText: {
     color: '#fff',
     fontWeight: 'bold',
   },
-  paginationContainer: {
-    flexDirection: 'row',
+  categoryContainer: {
     marginTop: 16,
   },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'gray',
-    marginHorizontal: 4,
+  categoryTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 8,
   },
-  activePaginationDot: {
-    backgroundColor: '#4E342E',
+  categoryList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  categoryItem: {
+    width: '30%',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  categoryImage: {
+    width: 60,
+    height: 60,
+    resizeMode: 'cover',
+    borderRadius: 30,
+  },
+  categoryItemText: {
+    marginTop: 4,
+    color: '#1f2937',
+  },
+  productContainer: {
+    width: '50%',
+    backgroundColor: '#f3f4f6',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginBottom: 16,
+    marginHorizontal: 2,
+  },
+  productImage: {
+    width: '100%',
+    height: 140,
+    resizeMode: 'cover',
+  },
+  productDetails: {
+    padding: 16,
+  },
+  productTitle: {
+    fontWeight: 'bold',
+    color: '#1f2937',
+  },
+  productPrice: {
+    color: '#f97316',
+  },
+  flatListContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+    justifyContent: 'space-between',
   },
 });
 
-export default CardCarousel;
+export default Explore;

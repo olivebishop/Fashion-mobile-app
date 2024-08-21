@@ -1,56 +1,13 @@
+import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import CardCarousel from '../../components/Slider';
+import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet } from 'react-native';
 
-// Define TypeScript types for the product data
-interface Product {
-  id: string;
-  title: string;
-  price: string;
-  image: any;
-}
+const Explore = () => {
+  const [searchText, setSearchText] = useState('');
 
-const exploreData: Product[] = [
-  {
-    id: '1',
-    title: 'Hooded Jacket',
-    price: '$99.99',
-    image: require('../../assets/images/one.jpg'),
-  },
-  {
-    id: '2',
-    title: 'Casual Shirt',
-    price: '$49.99',
-    image: require('../../assets/images/one.jpg'),
-  },
-  {
-    id: '3',
-    title: 'Skinny Jeans',
-    price: '$79.99',
-    image: require('../../assets/images/one.jpg'),
-  },
-  {
-    id: '4',
-    title: 'Ragged Jeans',
-    price: '$20.78',
-    image: require('../../assets/images/one.jpg'),
-  },
-  // Add more product data as needed
-];
-
-const Explore: React.FC = () => {
-  const [searchText, setSearchText] = useState<string>('');
-
-  // Define TypeScript type for renderItem's parameter
-  const renderItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity
-      style={styles.productContainer}
-    >
-      <Image
-        source={item.image}
-        style={styles.productImage}
-      />
+  const renderProduct = ({ item }) => (
+    <TouchableOpacity style={styles.productContainer}>
+      <Image source={item.image} style={styles.productImage} />
       <View style={styles.productDetails}>
         <Text style={styles.productTitle}>{item.title}</Text>
         <Text style={styles.productPrice}>{item.price}</Text>
@@ -58,16 +15,52 @@ const Explore: React.FC = () => {
     </TouchableOpacity>
   );
 
+  const exploreData = [
+    {
+      id: '1',
+      title: 'Hooded Jacket',
+      price: '$99.99',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '2',
+      title: 'Casual Shirt',
+      price: '$49.99',
+      image: require('../../assets/images/one.jpg'),
+    },
+   
+    // Add more product data as needed
+  ];
+
+  const categoryData = [
+    {
+      id: '1',
+      title: 'T-Shirt',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '2',
+      title: 'Pant',
+      image: require('../../assets/images/one.jpg'),
+    },
+    {
+      id: '3',
+      title: 'Dress',
+      image: require('../../assets/images/one.jpg'),
+    },
+   
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.locationContainer}>
-            <FontAwesome name="map-marker" size={24} color="#b5651d" />
-            <Text style={styles.locationText}>Nairobi</Text>
+          <EvilIcons name="location" size={24} color="black" />
+            <Text style={styles.locationText}>Mombasa, Kenya</Text>
           </View>
           <TouchableOpacity style={styles.notificationContainer}>
-            <FontAwesome name="bell" size={24} color="#b5651d" />
+          <Ionicons name="notifications" size={24} color="#451a03" />
           </TouchableOpacity>
         </View>
         <View style={styles.searchBox}>
@@ -78,17 +71,37 @@ const Explore: React.FC = () => {
             onChangeText={setSearchText}
           />
           <TouchableOpacity style={styles.searchButton}>
-            <FontAwesome name="search" size={24} color="#b5651d" />
+          <Octicons name="filter" size={24} color="#451a03" />
           </TouchableOpacity>
         </View>
-        <CardCarousel />
+        <View style={styles.cardContainer}>
+          <Image source={require('../../assets/images/one.jpg')} style={styles.cardImage} />
+          <View style={styles.cardContent}>
+            <Text style={styles.cardTitle}>New Collection</Text>
+            <Text style={styles.cardDescription}>Discount 50% for the first transaction</Text>
+            <TouchableOpacity style={styles.cardButton}>
+              <Text style={styles.cardButtonText}>Shop Now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.categoryContainer}>
+          <Text style={styles.categoryTitle}>Category</Text>
+          <View style={styles.categoryList}>
+            {categoryData.map((category) => (
+              <TouchableOpacity style={styles.categoryItem} key={category.id}>
+                <Image source={category.image} style={styles.categoryImage} />
+                <Text style={styles.categoryItemText}>{category.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
       </View>
       <FlatList
         data={exploreData}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.flatListContent}
-        renderItem={renderItem}
+        renderItem={renderProduct}
       />
     </View>
   );
@@ -98,34 +111,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-  } as ViewStyle,
+  },
   searchContainer: {
     paddingHorizontal: 16,
     paddingVertical: 24,
-  } as ViewStyle,
+  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-  } as ViewStyle,
+  },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  } as ViewStyle,
+  },
   locationText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#b5651d',
-    marginLeft: 8,
-  } as TextStyle,
+  },
   notificationContainer: {
     padding: 8,
-  } as ViewStyle,
+  },
+  notificationIcon: {
+    width: 24,
+    height: 24,
+  },
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-  } as ViewStyle,
+  },
   searchInput: {
     flex: 1,
     height: 40,
@@ -133,11 +149,81 @@ const styles = StyleSheet.create({
     borderColor: '#d1d5db',
     borderRadius: 9999,
     paddingHorizontal: 16,
-  } as TextStyle,
+  },
   searchButton: {
     padding: 8,
     marginLeft: 8,
-  } as ViewStyle,
+  },
+  searchIcon: {
+    width: 24,
+    height: 24,
+  },
+  cardContainer: {
+    marginTop: 16,
+    flexDirection: 'row',
+    backgroundColor: '#FFECB3',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  cardImage: {
+    width: '50%',
+    height: 200,
+    resizeMode: 'cover',
+  },
+  cardContent: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#424242',
+  },
+  cardDescription: {
+    marginTop: 8,
+    color: '#757575',
+  },
+  cardButton: {
+    backgroundColor: '#4E342E',
+    borderRadius: 4,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginTop: 16,
+  },
+  cardButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  categoryContainer: {
+    marginTop: 16,
+  },
+  categoryTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 8,
+  },
+  categoryList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  categoryItem: {
+    width: '30%',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  categoryImage: {
+    width: 60,
+    height: 60,
+    resizeMode: 'cover',
+    borderRadius: 30,
+  },
+  categoryItemText: {
+    marginTop: 4,
+    color: '#1f2937',
+  },
   productContainer: {
     width: '50%',
     backgroundColor: '#f3f4f6',
@@ -145,27 +231,27 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
     marginHorizontal: 2,
-  } as ViewStyle,
+  },
   productImage: {
     width: '100%',
-    height: 144,
+    height: 140,
     resizeMode: 'cover',
-  } as ImageStyle,
+  },
   productDetails: {
     padding: 16,
-  } as ViewStyle,
+  },
   productTitle: {
     fontWeight: 'bold',
     color: '#1f2937',
-  } as TextStyle,
+  },
   productPrice: {
     color: '#f97316',
-  } as TextStyle,
+  },
   flatListContent: {
     paddingHorizontal: 16,
     paddingBottom: 24,
     justifyContent: 'space-between',
-  } as ViewStyle,
+  },
 });
 
 export default Explore;
