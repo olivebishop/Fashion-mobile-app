@@ -1,6 +1,5 @@
-import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet, Dimensions } from 'react-native';
 
 const Explore = () => {
   const [searchText, setSearchText] = useState('');
@@ -26,9 +25,20 @@ const Explore = () => {
       id: '2',
       title: 'Casual Shirt',
       price: '$49.99',
+      image: require('../../assets/images/two.jpg'),
+    },
+    {
+      id: '3',
+      title: 'Skinny Jeans',
+      price: '$79.99',
+      image: require('../../assets/images/three.jpg'),
+    },
+    {
+      id: '4',
+      title: 'Ragged Jeans',
+      price: '$20.78',
       image: require('../../assets/images/one.jpg'),
     },
-   
     // Add more product data as needed
   ];
 
@@ -48,7 +58,11 @@ const Explore = () => {
       title: 'Dress',
       image: require('../../assets/images/one.jpg'),
     },
-   
+    {
+      id: '4',
+      title: 'Jacket',
+      
+    },
   ];
 
   return (
@@ -56,11 +70,10 @@ const Explore = () => {
       <View style={styles.searchContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.locationContainer}>
-          <EvilIcons name="location" size={24} color="black" />
-            <Text style={styles.locationText}>Mombasa, Kenya</Text>
+            <Text style={styles.locationText}>New York, USA</Text>
           </View>
           <TouchableOpacity style={styles.notificationContainer}>
-          <Ionicons name="notifications" size={24} color="#451a03" />
+            <Image source={require('../../assets/images/notification.png')} style={styles.notificationIcon} />
           </TouchableOpacity>
         </View>
         <View style={styles.searchBox}>
@@ -71,11 +84,11 @@ const Explore = () => {
             onChangeText={setSearchText}
           />
           <TouchableOpacity style={styles.searchButton}>
-          <Octicons name="filter" size={24} color="#451a03" />
+            <Image source={require('../../assets/images/search.png')} style={styles.searchIcon} />
           </TouchableOpacity>
         </View>
         <View style={styles.cardContainer}>
-          <Image source={require('../../assets/images/one.jpg')} style={styles.cardImage} />
+          <Image source={require('../../assets/images/new-collection.jpg')} style={styles.cardImage} />
           <View style={styles.cardContent}>
             <Text style={styles.cardTitle}>New Collection</Text>
             <Text style={styles.cardDescription}>Discount 50% for the first transaction</Text>
