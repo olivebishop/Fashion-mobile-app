@@ -4,34 +4,34 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet
 type CardContent = {
   title: string;
   description: string;
-  image: any;
+  image: any; 
 };
 
 const cardData: CardContent[] = [
   {
     title: 'New Collection 1',
     description: 'Discount 50% for the first transactions',
-    image: require('../../assets/images/one.jpg'),
+    image: require('../assets/images/one.jpg'),
   },
   {
     title: 'New Collection 2',
     description: 'Buy one, get one free!',
-    image: require('../../assets/images/one.jpg'),
+    image: require('../assets/images/one.jpg'),
   },
   {
     title: 'New Collection 3',
     description: 'Summer Sale!',
-    image: require('../../assets/images/one.jpg'),
+    image: require('../assets/images/one.jpg'),
   },
   {
     title: 'New Collection 4',
     description: 'Limited Edition!',
-    image: require('../../assets/images/one.jpg'),
+    image: require('../assets/images/one.jpg'),
   },
   {
     title: 'New Collection 5',
     description: 'Exclusive Offers!',
-    image: require('../../assets/images/one.jpg'),
+    image: require('../assets/images/one.jpg'),
   },
 ];
 
@@ -42,7 +42,7 @@ const CardCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex === cardData.length - 1 ? 0 : prevIndex + 1));
-    }, 3000);
+    }, 3000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -67,7 +67,6 @@ const CardCarousel = () => {
         {cardData.map((card, index) => (
           <View key={index} style={styles.cardContainer}>
             <View style={styles.card}>
-              <Image source={card.image} style={styles.image} />
               <View style={styles.content}>
                 <Text style={styles.title}>{card.title}</Text>
                 <Text style={styles.description}>{card.description}</Text>
@@ -75,6 +74,7 @@ const CardCarousel = () => {
                   <Text style={styles.buttonText}>Shop Now</Text>
                 </TouchableOpacity>
               </View>
+              <Image source={card.image} style={styles.image} />
             </View>
           </View>
         ))}
@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     width: '50%',
     height: 250,
     resizeMode: 'cover',
+    
   },
   content: {
     padding: 24,

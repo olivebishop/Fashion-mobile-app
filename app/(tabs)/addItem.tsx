@@ -1,12 +1,12 @@
-import { View, Text,  } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text } from 'react-native';
 
-const Page = () => {
+const FavoriteScreen: React.FC = () => {
   return (
     <View className='flex-1 justify-center items-center'>
-      <Text>Add Item</Text>
+      <Text className='text-2xl font-bold'>Favorites</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Page
+export default FavoriteScreen;
