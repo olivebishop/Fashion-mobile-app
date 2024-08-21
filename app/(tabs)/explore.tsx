@@ -1,166 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, TouchableOpacity, FlatList, Image, Text, StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import CardCarousel from '../../components/Slider';
 
-type CardContent = {
+// Define TypeScript types for the product data
+interface Product {
+  id: string;
   title: string;
-  description: string;
+  price: string;
   image: any;
-};
+}
 
-const cardData: CardContent[] = [
+const exploreData: Product[] = [
   {
-    title: 'New Collection 1',
-    description: 'Discount 50% for the first transactions',
+    id: '1',
+    title: 'Hooded Jacket',
+    price: '$99.99',
     image: require('../../assets/images/one.jpg'),
   },
   {
-    title: 'New Collection 2',
-    description: 'Buy one, get one free!',
+    id: '2',
+    title: 'Casual Shirt',
+    price: '$49.99',
     image: require('../../assets/images/one.jpg'),
   },
   {
-    title: 'New Collection 3',
-    description: 'Summer Sale!',
+    id: '3',
+    title: 'Skinny Jeans',
+    price: '$79.99',
     image: require('../../assets/images/one.jpg'),
   },
   {
-    title: 'New Collection 4',
-    description: 'Limited Edition!',
+    id: '4',
+    title: 'Ragged Jeans',
+    price: '$20.78',
     image: require('../../assets/images/one.jpg'),
   },
-  {
-    title: 'New Collection 5',
-    description: 'Exclusive Offers!',
-    image: require('../../assets/images/one.jpg'),
-  },
+  // Add more product data as needed
 ];
 
-const CardCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const windowWidth = Dimensions.get('window').width;
+const Explore: React.FC = () => {
+  const [searchText, setSearchText] = useState<string>('');
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === cardData.length - 1 ? 0 : prevIndex + 1));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleScroll = (event: any) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffsetX / windowWidth);
-    setCurrentIndex(index);
-  };
+  // Define TypeScript type for renderItem's parameter
+  const renderItem = ({ item }: { item: Product }) => (
+    <TouchableOpacity
+      style={styles.productContainer}
+    >
+      <Image
+        source={item.image}
+        style={styles.productImage}
+      />
+      <View style={styles.productDetails}>
+        <Text style={styles.productTitle}>{item.title}</Text>
+        <Text style={styles.productPrice}>{item.price}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        pagingEnabled
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        style={{ width: windowWidth }}
-        contentOffset={{ x: currentIndex * windowWidth, y: 0 }}
-      >
-        {cardData.map((card, index) => (
-          <View key={index} style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Image source={card.image} style={styles.image} />
-              <View style={styles.content}>
-                <Text style={styles.title}>{card.title}</Text>
-                <Text style={styles.description}>{card.description}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => alert('Button Pressed!')}>
-                  <Text style={styles.buttonText}>Shop Now</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-      <View style={styles.paginationContainer}>
-        {cardData.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              index === currentIndex ? styles.activePaginationDot : null,
-            ]}
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBox}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search products..."
+            value={searchText}
+            onChangeText={setSearchText}
           />
-        ))}
+          <TouchableOpacity style={styles.searchButton}>
+            <FontAwesome name="search" size={24} color="#b5651d" />
+          </TouchableOpacity>
+        </View>
+        <CardCarousel />
       </View>
+      <FlatList
+        data={exploreData}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={styles.flatListContent}
+        renderItem={renderItem}
+      />
     </View>
   );
 };
-
+// styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 32,
-  },
-  cardContainer: {
-    width: Dimensions.get('window').width - 32,
+    backgroundColor: '#ffffff',
+  } as ViewStyle,
+  searchContainer: {
     paddingHorizontal: 16,
-    justifyContent: 'center',
-  },
-  card: {
-    backgroundColor: '#FFECB3',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    paddingVertical: 24,
+  } as ViewStyle,
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  } as ViewStyle,
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 9999,
+    paddingHorizontal: 16,
+  } as TextStyle,
+  searchButton: {
+    padding: 8,
+  } as ViewStyle,
+  productContainer: {
+    width: '50%',
+    backgroundColor: '#f3f4f6',
     borderRadius: 8,
     overflow: 'hidden',
-    flexDirection: 'row',
-  },
-  image: {
-    width: '50%',
-    height: 250,
+    marginBottom: 16,
+    marginHorizontal: 2,
+  } as ViewStyle,
+  productImage: {
+    width: '100%',
+    height: 144,
     resizeMode: 'cover',
-  },
-  content: {
-    padding: 24,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
+  } as ImageStyle,
+  productDetails: {
+    padding: 16,
+  } as ViewStyle,
+  productTitle: {
     fontWeight: 'bold',
-    color: '#424242',
-  },
-  description: {
-    marginTop: 8,
-    color: '#757575',
-  },
-  button: {
-    backgroundColor: '#4E342E',
-    borderRadius: 4,
-    paddingVertical: 8,
+    color: '#1f2937',
+  } as TextStyle,
+  productPrice: {
+    color: '#f97316',
+  } as TextStyle,
+  flatListContent: {
     paddingHorizontal: 16,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  paginationContainer: {
-    flexDirection: 'row',
-    marginTop: 16,
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'gray',
-    marginHorizontal: 4,
-  },
-  activePaginationDot: {
-    backgroundColor: '#4E342E',
-  },
+    paddingBottom: 24,
+    justifyContent: 'space-between',
+  } as ViewStyle,
 });
 
-export default CardCarousel;
+export default Explore;
