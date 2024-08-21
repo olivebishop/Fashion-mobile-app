@@ -61,6 +61,15 @@ const Explore: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
+        <View style={styles.headerContainer}>
+          <View style={styles.locationContainer}>
+            <FontAwesome name="map-marker" size={24} color="#b5651d" />
+            <Text style={styles.locationText}>Nairobi</Text>
+          </View>
+          <TouchableOpacity style={styles.notificationContainer}>
+            <FontAwesome name="bell" size={24} color="#b5651d" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.searchBox}>
           <TextInput
             style={styles.searchInput}
@@ -84,7 +93,7 @@ const Explore: React.FC = () => {
     </View>
   );
 };
-// styles
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -94,10 +103,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 24,
   } as ViewStyle,
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  } as ViewStyle,
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  } as ViewStyle,
+  locationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#b5651d',
+    marginLeft: 8,
+  } as TextStyle,
+  notificationContainer: {
+    padding: 8,
+  } as ViewStyle,
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
   } as ViewStyle,
   searchInput: {
     flex: 1,
@@ -109,6 +136,7 @@ const styles = StyleSheet.create({
   } as TextStyle,
   searchButton: {
     padding: 8,
+    marginLeft: 8,
   } as ViewStyle,
   productContainer: {
     width: '50%',
