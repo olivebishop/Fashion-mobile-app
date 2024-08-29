@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { createUser } from '../../lib/auth';
+
 const CreateAccount: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
