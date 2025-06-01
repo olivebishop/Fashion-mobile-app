@@ -48,15 +48,7 @@ A modern, comprehensive mobile application UI kit designed for fashion and cloth
   <p><em>User profile management and app settings</em></p>
 </div>
 
-## 🎨 Design Resources
 
-**Figma Design Kit**: [Download Here](https://insightlancer.gumroad.com/l/clothingstoreapp-fashionecommerceapp-uikit)
-
-The complete design system includes:
-- Overview screens
-- Individual component designs
-- Complete user flow mockups
-- Style guide and components library
 
 ## 🚀 Tech Stack
 
