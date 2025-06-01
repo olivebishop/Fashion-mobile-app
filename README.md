@@ -123,7 +123,7 @@ clothing-store-app/
 
 1. **Clone the repository**
    ```bash
-   git clone [your-repo-url]
+   git clone [https://github.com/olivebishop/Fashion-mobile-app]
    cd clothing-store-app
    ```
 
@@ -206,8 +206,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- 📧 Email: [your-email@domain.com]
-- 💬 Discord: [Your Discord Server]
+- 📧 Email: [olivehendrilgen1@gmail.com]
+- 💬 Porfolio: [olivebishop.vercel.app]
 - 📱 Twitter: [@olivebishop_dev](https://x.com/olivebishop_dev)
 
 ## 🙏 Acknowledgments
